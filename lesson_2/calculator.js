@@ -5,6 +5,8 @@
 // Print the result to the terminal.
 
 let rlSync = require('readline-sync');
+let playAgain = 'y';
+let language = 'english';
 
 function prompt(message) {
   console.log(`=> ${message}`);
@@ -14,25 +16,53 @@ function invalidNumber(number) {
   return number.trimStart() === '' || Number.isNaN(Number(number));
 }
 
-prompt('Welcome to Calculator!');
+const MESSAGES = {
+  greeting: {
+    english: 'Welcome to Calculator!',
+    korean: '게산기에서 환영합니다'
+  },
+  firstNum: {
+    english: "What's the first number?",
+    korean: '첫 번호를 입력해주세요'
+  },
+  secondNum: {
+    english: "What's the second number?",
+    korean: '두번째 번호를 입력해주세요'
+  },
+  invalidNum: {
+    english: "Hmm... that doesn't look like a valid number.",
+    korean: '글쌔요... 번호가 아닌거같네요.'
+  },
+  operationQuestion: {
+    english: 'What operation would you like to use?\n1) Add 2) Subtract 3) Multiply 4) Divide',
+    korean: '어떤 계산을 하고싶나요?\n1) 더하기 2) 감하기 3) 곱하기 4) 나누기'
+  },
+  calculateAgain: {
+    english: 'Would you like to perform another operation? (y/n)',
+    korean: '다시하고싶나요? (y=예, n=아니요)'
+  }
+}
 
-prompt("What's the first number?");
+prompt(MESSAGES.greeting[language]);
+
+do {
+prompt(MESSAGES.firstNum[language]);
 let number1 = rlSync.question();
 
 while (invalidNumber(number1)) {
-  prompt("Hmm... that doesn't look like a valid number.");
+  prompt(MESSAGES.invalidNum[language]);
   number1 = rlSync.question();
 }
 
-prompt("What's the second number?");
+prompt(MESSAGES.secondNum[language]);
 let number2 = rlSync.question();
 
 while (invalidNumber(number2)) {
-  prompt("Hmm... that doesn't look like a valid number.");
+  prompt(MESSAGES.invalidNum[language]);
   number2 = rlSync.question();
 }
 
-prompt("What operation would you like to use?\n1) Addition 2) Subtraction 3) Multiplication 4) Division");
+prompt(MESSAGES.operationQuestion[language]);
 let operation = rlSync.question();
 
 while (!['1', '2', '3', '4'].includes(operation)) {
@@ -56,4 +86,8 @@ switch (operation) {
     break;
 }
 
-console.log(`The result is: ${answer}.`);
+prompt(`The result is: ${answer}.`);
+prompt(MESSAGES.calculateAgain[language]);
+playAgain = rlSync.question();
+
+} while (playAgain === 'y');
