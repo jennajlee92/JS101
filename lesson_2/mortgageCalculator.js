@@ -12,10 +12,8 @@
 
 console.log('Welcome to the mortgage calculator!');
 
-let again = 'y';
-
 function convertAprToMonthly(apr) {
-  let decimalRate = Number(apr) / 100;
+  let decimalRate = parseFloat(apr) / 100;
   return Math.pow((1 + decimalRate), (1 / 12)) - 1;
 }
 
@@ -32,6 +30,8 @@ function convertLoanToMonths(string) {
     return Number(arrayDuration[0]);
   }
 }
+
+let again = 'y';
 
 while (again === 'y') {
 let readline = require('readline-sync');
