@@ -32,20 +32,15 @@ function displayResults() {
 function displayWinner(choice, computerChoice) {
   prompt(`You chose ${VALID_CHOICES[choice]}, and computer chose ${VALID_CHOICES[computerChoice]}`);
 
-  if ((choice === 'r' && computerChoice === 's') ||
-      (choice === 'p' && computerChoice === 'r') ||
-      (choice === 'p' && computerChoice === 'S') ||
-      (choice === 's' && computerChoice === 'p') ||
-      (choice === 's' && computerChoice === 'l') ||
-      (choice === 'r' && computerChoice === 'l') ||
-      (choice === 'l' && computerChoice === 'S') ||
-      (choice === 'l' && computerChoice === 'p') ||
-      (choice === 'S' && computerChoice === 's') ||
-      (choice === 'S' && computerChoice === 'r')) {
+  if (choice === computerChoice) {
+    prompt("It's a tie.");
+  } else if ((choice === 'r' && 'sl'.includes(computerChoice)) ||
+            (choice === 'p' && 'Sr'.includes(computerChoice)) ||
+            (choice === 's' && 'pl'.includes(computerChoice)) ||
+            (choice === 'l' && 'Sp'.includes(computerChoice)) ||
+            (choice === 'S' && 'sr'.includes(computerChoice))) {
     prompt('You win!');
     yourWins += 1;
-  } else if (choice === computerChoice) {
-    prompt("It's a tie.");
   } else {
     prompt("Computer wins!");
     computerWins += 1;
