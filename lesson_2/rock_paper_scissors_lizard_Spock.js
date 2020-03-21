@@ -8,6 +8,14 @@ const VALID_CHOICES = {
   S: 'Spock (S)'
 };
 
+const WINNING_COMBOS = {
+  r: ['s', 'scissors', 'l', 'lizard'],
+  p: ['r', 'rock','S', 'Spock', 'spock'],
+  s: ['p', 'paper', 'l', 'lizard'],
+  l: ['p', 'paper', 'S', 'Spock', 'spock'],
+  S: ['r', 'rock', 's', 'scissors']
+};
+
 let playAgain = 'y';
 let yourWins = 0;
 let computerWins = 0;
@@ -17,11 +25,7 @@ function prompt(message) {
 }
 
 function playerWins(choice, computerChoice) {
-  return (choice === 'r' && 'sl'.includes(computerChoice)) ||
-         (choice === 'p' && 'Sr'.includes(computerChoice)) ||
-         (choice === 's' && 'pl'.includes(computerChoice)) ||
-         (choice === 'l' && 'Sp'.includes(computerChoice)) ||
-         (choice === 'S' && 'sr'.includes(computerChoice));
+  return WINNING_COMBOS[choice].includes(computerChoice);
 }
 
 function displayWinnerUpdateScore(choice, computerChoice) {
