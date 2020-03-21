@@ -16,29 +16,20 @@ function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function displayResults() {
-  prompt(`You: ${yourWins} Computer: ${computerWins}`);
-  if (yourWins === 5) {
-    prompt("You are the grand champion!");
-    yourWins = 0;
-    computerWins = 0;
-  } else if (computerWins === 5) {
-    prompt("The computer is the grand champion!");
-    yourWins = 0;
-    computerWins = 0;
-  }
+function playerWins(choice, computerChoice) {
+  return (choice === 'r' && 'sl'.includes(computerChoice)) ||
+         (choice === 'p' && 'Sr'.includes(computerChoice)) ||
+         (choice === 's' && 'pl'.includes(computerChoice)) ||
+         (choice === 'l' && 'Sp'.includes(computerChoice)) ||
+         (choice === 'S' && 'sr'.includes(computerChoice));
 }
 
-function displayWinner(choice, computerChoice) {
+function displayWinnerUpdateScore(choice, computerChoice) {
   prompt(`You chose ${VALID_CHOICES[choice]}, and computer chose ${VALID_CHOICES[computerChoice]}`);
 
   if (choice === computerChoice) {
     prompt("It's a tie.");
-  } else if ((choice === 'r' && 'sl'.includes(computerChoice)) ||
-            (choice === 'p' && 'Sr'.includes(computerChoice)) ||
-            (choice === 's' && 'pl'.includes(computerChoice)) ||
-            (choice === 'l' && 'Sp'.includes(computerChoice)) ||
-            (choice === 'S' && 'sr'.includes(computerChoice))) {
+  } else if (playerWins(choice, computerChoice)) {
     prompt('You win!');
     yourWins += 1;
   } else {
@@ -47,22 +38,39 @@ function displayWinner(choice, computerChoice) {
   }
 }
 
-while (playAgain === 'y') {
-prompt(`Choose one: ${Object.values(VALID_CHOICES).join(', ')}`);
-let choice = readline.question();
+function displayScoresMaybeDeclareChampion() {
+  prompt(`You: ${yourWins} Computer: ${computerWins}`);
 
-while (!Object.keys(VALID_CHOICES).includes(choice)) {
-  prompt("That's not a valid choice.");
-  choice = readline.question();
+  if (yourWins === 5) {
+    prompt("You are the grand champion!");
+    wipeScores();
+  } else if (computerWins === 5) {
+    prompt("The computer is the grand champion!");
+    wipeScores();
+  }
 }
 
-let computerIndex = Math.floor(Math.random()
+function wipeScores() {
+  yourWins = 0;
+  computerWins = 0;
+}
+
+while (['Y', 'y', 'yes', 'Yes'].includes(playAgain)) {
+  prompt(`Choose one: ${Object.values(VALID_CHOICES).join(', ')}`);
+  let choice = readline.question();
+
+  while (!Object.keys(VALID_CHOICES).includes(choice)) {
+    prompt("That's not a valid choice.");
+    choice = readline.question();
+  }
+
+  let computerIndex = Math.floor(Math.random()
                     * Object.keys(VALID_CHOICES).length);
-let computerChoice = Object.keys(VALID_CHOICES)[computerIndex];
+  let computerChoice = Object.keys(VALID_CHOICES)[computerIndex];
 
-displayWinner(choice, computerChoice);
-displayResults();
+  displayWinnerUpdateScore(choice, computerChoice);
+  displayScoresMaybeDeclareChampion();
 
-prompt('Play again? (y/n)');
-playAgain = readline.question();
+  prompt('Play again? (y/n)');
+  playAgain = readline.question();
 }
