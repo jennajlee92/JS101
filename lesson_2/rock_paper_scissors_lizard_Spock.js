@@ -5,15 +5,15 @@ const VALID_CHOICES = {
   p: 'paper (p)',
   s: 'scissors (s)',
   l: 'lizard (l)',
-  S: 'Spock (S)'
+  v: 'Spock (v)'
 };
 
 const WINNING_COMBOS = {
-  r: ['s', 'scissors', 'l', 'lizard'],
-  p: ['r', 'rock','S', 'Spock', 'spock'],
-  s: ['p', 'paper', 'l', 'lizard'],
-  l: ['p', 'paper', 'S', 'Spock', 'spock'],
-  S: ['r', 'rock', 's', 'scissors']
+  r: ['s', 'l'],
+  p: ['r', 'v'],
+  s: ['p', 'l'],
+  l: ['p', 'v'],
+  v: ['r', 's']
 };
 
 let playAgain = 'y';
