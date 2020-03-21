@@ -59,13 +59,13 @@ function wipeScores() {
   computerWins = 0;
 }
 
-while (['Y', 'y', 'yes', 'Yes'].includes(playAgain)) {
+while (['y', 'yes'].includes(playAgain)) {
   prompt(`Choose one: ${Object.values(VALID_CHOICES).join(', ')}`);
-  let choice = readline.question();
+  let choice = readline.question().toLowerCase();
 
   while (!Object.keys(VALID_CHOICES).includes(choice)) {
     prompt("That's not a valid choice.");
-    choice = readline.question();
+    choice = readline.question().toLowerCase();
   }
 
   let computerIndex = Math.floor(Math.random()
@@ -76,5 +76,5 @@ while (['Y', 'y', 'yes', 'Yes'].includes(playAgain)) {
   displayScoresMaybeDeclareChampion();
 
   prompt('Play again? (y/n)');
-  playAgain = readline.question();
+  playAgain = readline.question().toLowerCase();
 }
