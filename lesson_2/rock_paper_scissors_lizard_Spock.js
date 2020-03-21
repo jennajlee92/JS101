@@ -1,4 +1,5 @@
-let readline = require('readline-sync');
+const readline = require('readline-sync');
+
 const VALID_CHOICES = {
   r: 'rock (r)',
   p: 'paper (p)',
@@ -29,35 +30,25 @@ function displayResults() {
 }
 
 function displayWinner(choice, computerChoice) {
-  prompt(`You chose ${choice}, and computer chose ${computerChoice}`);
+  prompt(`You chose ${VALID_CHOICES[choice]}, and computer chose ${VALID_CHOICES[computerChoice]}`);
 
-  if ((choice === 'rock (r)' && computerChoice === 'scissors (s)') ||
-      (choice === 'paper (p)' && computerChoice === 'rock (r)') ||
-      (choice === 'paper (p)' && computerChoice === 'Spock (S)') ||
-      (choice === 'scissors (s)' && computerChoice === 'paper (p)') ||
-      (choice === 'scissors (s)' && computerChoice === 'lizard (l)') ||
-      (choice === 'rock (r)' && computerChoice === 'lizard (l)') ||
-      (choice === 'lizard (l)' && computerChoice === 'Spock (S)') ||
-      (choice === 'lizard (l)' && computerChoice === 'paper (p)') ||
-      (choice === 'Spock (S)' && computerChoice === 'scissors (s)') ||
-      (choice === 'Spock (S)' && computerChoice === 'rock (r)')) {
+  if ((choice === 'r' && computerChoice === 's') ||
+      (choice === 'p' && computerChoice === 'r') ||
+      (choice === 'p' && computerChoice === 'S') ||
+      (choice === 's' && computerChoice === 'p') ||
+      (choice === 's' && computerChoice === 'l') ||
+      (choice === 'r' && computerChoice === 'l') ||
+      (choice === 'l' && computerChoice === 'S') ||
+      (choice === 'l' && computerChoice === 'p') ||
+      (choice === 'S' && computerChoice === 's') ||
+      (choice === 'S' && computerChoice === 'r')) {
     prompt('You win!');
     yourWins += 1;
-  } else if ((choice === 'rock (r)' && computerChoice === 'paper (p)') ||
-            (choice === 'lizard (l)' && computerChoice === 'rock (r)') ||
-            (choice === 'paper (p)' && computerChoice === 'scissors (s)') ||
-            (choice === 'lizard (l)' && computerChoice === 'rock (r)') ||
-            (choice === 'Spock (S)' && computerChoice === 'lizard (l)') ||
-            (choice === 'scissors (s)' && computerChoice === 'Spock (S)') ||
-            (choice === 'scissors (s)' && computerChoice === 'rock (r)') ||
-            (choice === 'lizard (l)' && computerChoice === 'scissors (s)') ||
-            (choice === 'paper (p)' && computerChoice === 'lizard (l)') ||
-            (choice === 'Spock (S)' && computerChoice === 'paper (p)') ||
-            (choice === 'rock (r)' && computerChoice === 'Spock (S)')) {
-    prompt('Computer wins!');
-    computerWins += 1;
-  } else {
+  } else if (choice === computerChoice) {
     prompt("It's a tie.");
+  } else {
+    prompt("Computer wins!");
+    computerWins += 1;
   }
 }
 
@@ -72,9 +63,9 @@ while (!Object.keys(VALID_CHOICES).includes(choice)) {
 
 let computerIndex = Math.floor(Math.random()
                     * Object.keys(VALID_CHOICES).length);
-let computerChoice = Object.values(VALID_CHOICES)[computerIndex];
+let computerChoice = Object.keys(VALID_CHOICES)[computerIndex];
 
-displayWinner(VALID_CHOICES[choice], computerChoice);
+displayWinner(choice, computerChoice);
 displayResults();
 
 prompt('Play again? (y/n)');
