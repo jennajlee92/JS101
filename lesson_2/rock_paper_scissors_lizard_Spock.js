@@ -28,21 +28,19 @@ function playerWins(choice, computerChoice) {
   return WINNING_COMBOS[choice].includes(computerChoice);
 }
 
-function displayWinnerUpdateScore(choice, computerChoice) {
+function displayWinner(choice, computerChoice) {
   prompt(`You chose ${VALID_CHOICES[choice]}, and computer chose ${VALID_CHOICES[computerChoice]}`);
 
   if (choice === computerChoice) {
     prompt("It's a tie.");
   } else if (playerWins(choice, computerChoice)) {
     prompt('You win!');
-    yourWins += 1;
   } else {
     prompt("Computer wins!");
-    computerWins += 1;
   }
 }
 
-function displayScoresMaybeDeclareChampion() {
+function declareChampion(yourWins, computerWins) {
   prompt(`You: ${yourWins} Computer: ${computerWins}`);
 
   if (yourWins === 5) {
@@ -51,6 +49,14 @@ function displayScoresMaybeDeclareChampion() {
   } else if (computerWins === 5) {
     prompt("The computer is the grand champion!");
     wipeScores();
+  }
+}
+
+function updateScores(choice, computerChoice) {
+  if (playerWins(choice, computerChoice)) {
+    yourWins += 1;
+  } else if (playerWins(computerChoice, choice)) {
+    computerWins += 1;
   }
 }
 
@@ -72,8 +78,9 @@ while (['y', 'yes'].includes(playAgain)) {
                     * Object.keys(VALID_CHOICES).length);
   let computerChoice = Object.keys(VALID_CHOICES)[computerIndex];
 
-  displayWinnerUpdateScore(choice, computerChoice);
-  displayScoresMaybeDeclareChampion();
+  displayWinner(choice, computerChoice);
+  updateScores(choice, computerChoice);
+  declareChampion(yourWins, computerWins);
 
   prompt('Play again? (y/n)');
   playAgain = readline.question().toLowerCase();
