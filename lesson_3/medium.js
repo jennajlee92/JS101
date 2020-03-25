@@ -53,6 +53,3 @@ function factors(number) {
 }
 
 factors(100);
-
-// Question 4
-
