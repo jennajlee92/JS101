@@ -2,12 +2,17 @@
 // float = non-decimal + (minutes * 1/60) + (seconds * 1/60 * 1/60)
 // float - non-decimal = (minutes * 1/60) + (seconds * 1/60 * 1/60)
 
-function dms(number) {
-  let integer = Math.floor(number);
-  let decimal = number - integer;
+function dms(degreesFloat) {
+  let degree = Math.floor(degreesFloat);
+  let decimal = degreesFloat - degree;
   let minutes = Math.floor(decimal * 60);
   let seconds = Math.floor(((decimal * 60) - minutes) * 60);
-  console.log(`${integer}°${minutes}'${seconds}"`);
+  console.log(`${degree}°${padZeroes(minutes)}'${padZeroes(seconds)}"`);
+}
+
+function padZeroes(number) {
+  var numString = String(number);
+  return numString.length < 2 ? ('0' + numString) : numString;
 }
 
 dms(30);           // 30°00'00"
