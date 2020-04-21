@@ -134,3 +134,47 @@ console.log(arr);
 
 // Problem 12
 
+arr = [[2], [3, 5, 7], [9], [11, 15, 18]];
+
+arr1 = arr.map(array => array.filter(num => num % 3 === 0));
+
+// Problem 13
+
+arr = [[1, 6, 7], [1, 5, 3], [1, 8, 3]];
+
+arr1 = arr.sort((subArr1, subArr2) => subArr1.filter(num => num % 2 === 1).reduce((acc, curr) => acc + curr)
+  - subArr2.filter(num => num % 2 === 1).reduce((acc, curr) => acc + curr));
+
+// Problem 14
+
+obj = {
+  grape: { type: 'fruit', colors: ['red', 'green'], size: 'small' },
+  carrot: { type: 'vegetable', colors: ['orange'], size: 'medium' },
+  apple: { type: 'fruit', colors: ['red', 'green'], size: 'medium' },
+  apricot: { type: 'fruit', colors: ['orange'], size: 'medium' },
+  marrow: { type: 'vegetable', colors: ['green'], size: 'large' },
+};
+
+arr1 = Object.values(obj).map(obj => {
+  if (obj.type === 'fruit') {
+    return obj.colors.map(color => color[0].toUpperCase() + color.slice(1));
+  } else {
+    return obj.size.toUpperCase();
+  }
+});
+
+// Problem 15
+
+arr = [
+  { a: [1, 2, 3] },
+  { b: [2, 4, 6], c: [3, 6], d: [4] },
+  { e: [8], f: [6, 10] },
+];
+
+arr1 = arr.filter(obj => {
+  let array = Object.values(obj);
+  console.log(array);
+  return array.every(num => num % 2 === 0);
+});
+
+console.log(arr1);
