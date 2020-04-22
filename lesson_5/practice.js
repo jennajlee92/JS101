@@ -172,9 +172,18 @@ arr = [
 ];
 
 arr1 = arr.filter(obj => {
-  let array = Object.values(obj);
-  console.log(array);
-  return array.every(num => num % 2 === 0);
+  return Object.values(obj).every(array => {
+    return array.every(num => num % 2 === 0);
+  });
 });
 
-console.log(arr1);
+// Problem 16
+
+arr = [['a', 1], ['b', 'two'], ['sea', {'c': 3}], ['D', ['a', 'b', 'c']]];
+
+// expected return value of function call
+// { a: 1, b: 'two', sea: { c: 3 }, D: [ 'a', 'b', 'c' ] }
+
+obj = Object.fromEntries(arr);
+
+console.log(obj);
