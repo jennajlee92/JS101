@@ -46,10 +46,15 @@ function initializeBoard() {
 
 function joinOr(array, connector = ', ', lastCon = 'or') {
   let last = array[array.length - 1];
-  if (array.length < 3) {
-    return array[0] + " " + lastCon + " " + last;
-  } else {
-    return array.slice(0, array.length - 1).join(connector) + connector + lastCon + ' ' + last;
+  switch (array.length) {
+    case 0:
+      return '';
+    case 1:
+      return `${array[0]}`;
+    case 2:
+      return array.join(` ${word} `);
+    default:
+      return array.slice(0, array.length - 1).join(connector) + connector + lastCon + ' ' + last;
   }
 }
 
