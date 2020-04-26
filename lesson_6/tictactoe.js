@@ -112,6 +112,12 @@ function detectWinner(board) {
   return null;
 }
 
+function keepScore(board) {
+  if (someoneWon(board) === 'Player') {
+    let [computerWins, playerWins] = [] // need to write this code
+  }
+}
+
 while (true) {
   let board = initializeBoard();
 
