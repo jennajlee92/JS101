@@ -24,3 +24,29 @@ transactionsFor(101, transactions);
 // [ { id: 101, movement: "in",  quantity:  5 },
 //   { id: 101, movement: "in",  quantity: 12 },
 //   { id: 101, movement: "out", quantity: 18 }, ]
+
+function empty(array) {
+  let quantity = 0;
+
+  for (let idx = 0; idx < array.length; idx += 1) {
+    if (array[idx].movement === 'in') {
+      quantity += array[idx].quantity;
+    } else {
+      quantity -= array[idx].quantity;
+    }
+  }
+
+  if (quantity > 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function isItemAvailable(itemNum, transactions) {
+  return (empty(transactionsFor(itemNum, transactions))) ? false : true;
+}
+
+console.log(isItemAvailable(101, transactions));     // false
+console.log(isItemAvailable(103, transactions));     // false
+console.log(isItemAvailable(105, transactions));     // true
