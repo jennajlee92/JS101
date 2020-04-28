@@ -10,6 +10,8 @@ let winningLines = [
   [1, 5, 9], [3, 5, 7] // diagonals
 ];
 
+const gamesInMatch = 5;
+
 function prompt(string) {
   console.log(`=> ${string}`);
 }
@@ -17,7 +19,7 @@ function prompt(string) {
 function displayBoard(board) {
   console.clear();
 
-  console.log(`You are ${HUMAN_MARKER}. Computer is ${COMPUTER_MARKER}`);
+  console.log(`You are ${HUMAN_MARKER}. Computer is ${COMPUTER_MARKER}.`);
 
   console.log('');
   console.log('     |     |');
@@ -77,8 +79,13 @@ function playerChoosesSquare(board) {
 }
 
 function computerChoosesSquare(board) {
-  let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
-  let square = emptySquares(board)[randomIndex];
+  if (findAtRiskSquare(board)) {
+    let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
+    let square = emptySquares(board)[randomIndex];
+  } else {
+    let square = findAtRiskSquare(board);
+  }
+
   board[square] = COMPUTER_MARKER;
 }
 
@@ -112,17 +119,66 @@ function detectWinner(board) {
   return null;
 }
 
-function keepScore(board) {
-  if (someoneWon(board) === 'Player') {
-    let [computerWins, playerWins] = [] // need to write this code
+function findAtRiskSquare(board) {
+  for (let line = 0; line < winningLines.length; line += 1) {
+    let [sq1, sq2, sq3] = winningLines[line];
+
+    if (board[sq1] === HUMAN_MARKER
+      && board[sq2] === HUMAN_MARKER
+      && board[sq3] === INITIAL_MARKER) {
+      return sq3;
+    } else if (board[sq1] === HUMAN_MARKER
+      && board[sq3] === HUMAN_MARKER
+      && board[sq2] === INITIAL_MARKER) {
+      return sq2;
+    } else if (board[sq2] === HUMAN_MARKER
+      && board[sq3] === HUMAN_MARKER
+      && board[sq1] === INITIAL_MARKER) {
+      return sq1;
+    }
+  }
+
+  return null;
+}
+
+function setupScore() {
+  let score = {};
+  score.Player = 0;
+  score.Computer = 0;
+  return score;
+}
+
+function announceScore(score) {
+  let values = Object.values(score);
+  let entries = Object.entries(score);
+
+  if (values[0] !== 0 || values[1] !== 0) {
+    for (let player in score) {
+      prompt(`${player}: ${score[player]}`);
+    }
+
+    for (let idx = 0; idx < entries.length; idx += 1) {
+      if (entries[idx][1] === gamesInMatch) {
+        prompt(`${entries[idx][0]} won the match!`);
+      }
+    }
   }
 }
+
+function updateScore(score, winner) {
+  if (winner !== null) {
+    score[winner] += 1;
+  }
+}
+
+let score = setupScore();
 
 while (true) {
   let board = initializeBoard();
 
   while (true) {
     displayBoard(board);
+    announceScore(score);
 
     playerChoosesSquare(board);
     if (someoneWon(board) || boardFull(board)) break;
@@ -135,8 +191,14 @@ while (true) {
 
   if (someoneWon(board)) {
     prompt(`${detectWinner(board)} won!`);
+    updateScore(score, detectWinner(board));
+    announceScore(score);
+    if (Object.values(score).includes(gamesInMatch)) {
+      score = setupScore();
+    }
   } else {
     prompt("It's a tie!");
+    announceScore(score);
   }
 
   prompt('Play again? (y or n)');
