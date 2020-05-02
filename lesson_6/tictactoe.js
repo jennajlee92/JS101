@@ -10,7 +10,7 @@ let winningLines = [
   [1, 5, 9], [3, 5, 7] // diagonals
 ];
 
-const gamesInMatch = 5;
+let gamesInMatch = 5;
 
 function prompt(string) {
   console.log(`=> ${string}`);
@@ -79,12 +79,8 @@ function playerChoosesSquare(board) {
 }
 
 function computerChoosesSquare(board) {
-  if (findAtRiskSquare(board)) {
-    let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
-    let square = emptySquares(board)[randomIndex];
-  } else {
-    let square = findAtRiskSquare(board);
-  }
+  let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
+  let square = emptySquares(board)[randomIndex];
 
   board[square] = COMPUTER_MARKER;
 }
@@ -113,28 +109,6 @@ function detectWinner(board) {
       board[sq3] === COMPUTER_MARKER
     ) {
       return 'Computer';
-    }
-  }
-
-  return null;
-}
-
-function findAtRiskSquare(board) {
-  for (let line = 0; line < winningLines.length; line += 1) {
-    let [sq1, sq2, sq3] = winningLines[line];
-
-    if (board[sq1] === HUMAN_MARKER
-      && board[sq2] === HUMAN_MARKER
-      && board[sq3] === INITIAL_MARKER) {
-      return sq3;
-    } else if (board[sq1] === HUMAN_MARKER
-      && board[sq3] === HUMAN_MARKER
-      && board[sq2] === INITIAL_MARKER) {
-      return sq2;
-    } else if (board[sq2] === HUMAN_MARKER
-      && board[sq3] === HUMAN_MARKER
-      && board[sq1] === INITIAL_MARKER) {
-      return sq1;
     }
   }
 
